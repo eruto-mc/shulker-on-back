@@ -1,0 +1,39 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+issueTrackerURL="https://github.com/erutobusiness/shulker-on-back/issues"
+
+[[mods]]
+modId="shulker_on_back"
+version="1.0"
+displayName="Shulker on Back"
+authors="erutobusiness"
+description='''
+Open the shulker box (or ender chest) you carry in the Curios back slot with a single key.
+
+Requires Curios and a mod that provides the "back_weapon" slot (for example Back Weapon Slot).
+Only shulker boxes and ender chests can be opened; anything else on your back is ignored.
+The shulker box contents are written back to the item on every change, so nothing is lost
+if the server stops while the screen is open.
+'''
+
+[[dependencies.shulker_on_back]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.shulker_on_back]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.20.2)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.shulker_on_back]]
+    modId="curios"
+    mandatory=true
+    versionRange="[5.0,)"
+    ordering="AFTER"
+    side="BOTH"

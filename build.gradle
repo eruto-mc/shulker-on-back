@@ -1,0 +1,62 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
+}
+
+version = '1.0'
+group = 'net.erutobusiness'
+base { archivesName = 'shulker_on_back' }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'info'
+            mods {
+                shulker_on_back {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'info'
+            mods {
+                shulker_on_back {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
+    // Curios API の解決用。実行時は Curios 本体が居る前提なので同梱しない。
+    // jar は難読化済みだが、参照するのは Curios 自身のクラス名・メソッド名だけなので
+    // official マッピングでのコンパイルでも解決できる（zombie_warhorses の libs/ と同じ手法）。
+    compileOnly files('libs/curios.jar')
+}
+
+jar {
+    manifest {
+        attributes([
+                'Specification-Title'     : 'shulker_on_back',
+                'Specification-Vendor'    : 'erutobusiness',
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : 'erutobusiness',
+        ])
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "key.categories.shulker_on_back": "背中の収納",
+  "key.shulker_on_back.open": "背中の収納を開く",
+  "message.shulker_on_back.empty": "背中には何も背負っていない",
+  "message.shulker_on_back.not_storage": "これは開けない"
+}

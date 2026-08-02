@@ -1,0 +1,6 @@
+{
+  "key.categories.shulker_on_back": "Shulker on Back",
+  "key.shulker_on_back.open": "Open storage on back",
+  "message.shulker_on_back.empty": "Nothing on your back",
+  "message.shulker_on_back.not_storage": "That cannot be opened"
+}
