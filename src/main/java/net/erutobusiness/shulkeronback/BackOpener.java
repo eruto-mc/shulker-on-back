@@ -28,7 +28,24 @@ public final class BackOpener {
             case OTHER -> tell(player, "message.shulker_on_back.not_storage");
             case SHULKER_BOX -> openShulker(player, onBack);
             case ENDER_CHEST -> openEnderChest(player);
+            case ITEM_CONTAINER -> openItemContainer(player, onBack);
         }
+    }
+
+    /**
+     * 中身を capability で持つアイテム（矢筒など）を開く。
+     *
+     * <p>音は素材が分からないので<b>持ち物をしまう音</b>を使う。
+     */
+    private static void openItemContainer(ServerPlayer player, ItemStack onBack) {
+        BackSlotAccess.handlerOf(onBack).ifPresentOrElse(handler -> {
+            BackHandlerContainer container = new BackHandlerContainer(onBack, handler);
+            NetworkHooks.openScreen(player, new SimpleMenuProvider(
+                    (id, inv, p) -> new BackHandlerMenu(id, inv, container),
+                    onBack.getHoverName()));
+            player.level().playSound(null, player.blockPosition(),
+                    SoundEvents.BUNDLE_INSERT, SoundSource.PLAYERS, 0.6F, 1.0F);
+        }, () -> tell(player, "message.shulker_on_back.not_storage"));
     }
 
     private static void openShulker(ServerPlayer player, ItemStack onBack) {
