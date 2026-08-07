@@ -38,14 +38,22 @@ minecraft {
 
 repositories {
     mavenCentral()
+    // Curios の作者が公開している maven。ここから取れば jar を手元に置かなくてよい。
+    maven {
+        name = "theillusivec4"
+        url = "https://maven.theillusivec4.top/"
+        content { includeGroup "top.theillusivec4.curios" }
+    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
     // Curios API の解決用。実行時は Curios 本体が居る前提なので同梱しない。
-    // jar は難読化済みだが、参照するのは Curios 自身のクラス名・メソッド名だけなので
-    // official マッピングでのコンパイルでも解決できる（zombie_warhorses の libs/ と同じ手法）。
-    compileOnly files('libs/curios.jar')
+    // ⚠ 2026-08-07 に `files('libs/curios.jar')` から maven へ移した。
+    //    手元に jar を置く方式だと、**clone した人がビルドできない**（どのMODのどの版を
+    //    どの名前で置くのか分からない）うえ、CI も回せなかった。
+    //    版は instance/mods の実物と同じ 5.14.1+1.20.1（SHA1 照合ずみ）。
+    compileOnly "top.theillusivec4.curios:curios-forge:5.14.1+1.20.1"
 }
 
 jar {
