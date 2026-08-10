@@ -69,7 +69,7 @@ public final class BackSlotAccess {
      * Back Weapon Slot の定義は size を書いていない）。
      * つまり<b>武器とシュルカーは同じ1枠を取り合う</b>のに、
      * 「入れ替える」と「開く」で別々のキーを使っていた（V と B）。
-     * 2026-08-10 に B へ寄せ、V を明け渡した（部のキー方針 selection/keybinding-policy.md）。
+     * 2026-08-10 に「開く」側のキーへ寄せ、持ち替え専用のキーは使わないことにした。
      *
      * <p>背中へ入れてよいかは <b>Curios に訊く</b>（{@code isStackValid}）。
      * 自前で「武器かどうか」を判定すると、Back Weapon Slot 側の条件が変わったときに食い違う。
