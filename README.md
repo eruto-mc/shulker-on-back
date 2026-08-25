@@ -1,6 +1,7 @@
 # Shulker on Back
 
-Open the shulker box (or ender chest) you carry in the **Curios back slot** with a single key.
+Open the shulker box (or ender chest) you carry in the **Curios back slot** with a single key,
+and decide with an item tag what may go on the back at all.
 
 Minecraft 1.20.1 / Forge. MIT.
 
@@ -10,6 +11,33 @@ Minecraft 1.20.1 / Forge. MIT.
 - **Shulker boxes** open a normal shulker screen; the contents live in the item's NBT
 - **Ender chests** open your personal ender inventory
 - Anything else on your back is ignored (a short message tells you why)
+- The item tag **`curios:back_weapon`** decides what may be worn on the back
+
+## The back slot filter
+
+Back Weapon Slot answers `CurioEquipEvent` with `Result.ALLOW`, and
+`DynamicStackHandler.isItemValid` returns `true` the moment it sees `ALLOW`. The tag check
+never runs, so **any item at all** can be dragged onto the back. Its
+`disallow_curio_items` option does not fix this: it only rejects items that own a Curios
+slot of their own, so dirt and torches still go on.
+
+`BackSlotFilter` subscribes to the same event at `EventPriority.LOWEST`, which runs after
+Back Weapon Slot, and replaces the result with a plain tag test:
+
+```java
+event.setResult(event.getStack().is(ALLOWED) ? Result.ALLOW : Result.DENY);
+```
+
+The other way in — this mod's own B-key swap — asks `CuriosApi.isStackValid` instead, which
+never fires the event. That path reads the slot's `validators`, and Back Weapon Slot ships
+none, so `testCurioPredicates` on an empty set returns `false` and **nothing** could be
+swapped on. Add `"validators": ["curios:tag"]` to `back_weapon` in a data pack and both ways
+in are decided by the same tag. Curios merges slot definitions field by field, so a data pack
+that writes only `validators` keeps the original `order` and `icon`.
+
+**If the tag is empty the filter stands down.** Data packs are server-side only, so a missing
+one would otherwise lock the slot completely; instead the mod logs one warning and leaves the
+result alone.
 
 ## Requirements
 

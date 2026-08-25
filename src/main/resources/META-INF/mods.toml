@@ -5,16 +5,22 @@ issueTrackerURL="https://github.com/erutobusiness/shulker-on-back/issues"
 
 [[mods]]
 modId="shulker_on_back"
-version="1.0"
+version="1.1"
 displayName="Shulker on Back"
 authors="erutobusiness"
 description='''
-Open the shulker box (or ender chest) you carry in the Curios back slot with a single key.
+Open the shulker box (or ender chest) you carry in the Curios back slot with a single key,
+and decide with an item tag what may be worn on the back at all.
 
 Requires Curios and a mod that provides the "back_weapon" slot (for example Back Weapon Slot).
 Only shulker boxes and ender chests can be opened; anything else on your back is ignored.
 The shulker box contents are written back to the item on every change, so nothing is lost
 if the server stops while the screen is open.
+
+Back Weapon Slot lets any item onto the back because it answers CurioEquipEvent with ALLOW,
+which skips the tag check. This mod answers the same event last and replaces that result with
+the item tag "curios:back_weapon". If the tag is empty the filter stands down, so a missing
+data pack cannot lock the slot.
 '''
 
 [[dependencies.shulker_on_back]]
