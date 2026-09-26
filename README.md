@@ -58,6 +58,14 @@ Without them the key simply does nothing.
   registration is needed.
 - **The screen closes if the item leaves the back slot** (death, commands, another mod).
   Rare, but editing a detached stack would silently drop items.
+- **The screen reloads if something else rewrote the box while it is open** (1.2).
+  Forge's shulker item handler writes the box contents when another mod goes through it —
+  for example Spoiled replacing a rotted food item. Before 1.2 the screen kept its own copy
+  and the next click wrote that copy back: the rotten item turned back into food, and anything
+  added through the handler in the meantime was lost. The screen now remembers the `Items`
+  list it last read or wrote and reloads when that list has been replaced (checked every tick
+  before syncing, and before every click). It compares by identity, not contents, because
+  Spoiled edits the spoil timer in place.
 - An empty shulker box has its `BlockEntityTag` removed so it stacks again, like vanilla.
 
 ## Verified

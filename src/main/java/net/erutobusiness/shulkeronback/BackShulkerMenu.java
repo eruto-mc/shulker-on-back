@@ -2,6 +2,7 @@ package net.erutobusiness.shulkeronback;
 
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.ShulkerBoxMenu;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,6 +27,29 @@ public class BackShulkerMenu extends ShulkerBoxMenu {
     public BackShulkerMenu(int containerId, Inventory playerInventory, BackShulkerContainer container) {
         super(containerId, playerInventory, container);
         this.container = container;
+    }
+
+    /**
+     * 開いている間に箱の中身がほかの経路で書き換わったら、画面の写しを読み直してから同期する。
+     *
+     * <p>サーバは開いている画面ごとに毎 tick これを呼ぶ（{@code ServerPlayer.tick}）ので、
+     * 部員の画面にも1 tick 遅れで新しい中身が出る。
+     */
+    @Override
+    public void broadcastChanges() {
+        this.container.reloadIfChangedElsewhere();
+        super.broadcastChanges();
+    }
+
+    /**
+     * クリックの前にも読み直す。⚠ 窓口からの書き込みとクリックの間に {@code broadcastChanges} が
+     * 挟まるとは限らない（クリックの通信はプレイヤーの tick とは別に処理される）ので、
+     * 古い写しを土台にクリックを処理して書き戻さないよう、ここでも見る。
+     */
+    @Override
+    public void clicked(int slotId, int button, ClickType clickType, Player player) {
+        this.container.reloadIfChangedElsewhere();
+        super.clicked(slotId, button, clickType, player);
     }
 
     @Override
