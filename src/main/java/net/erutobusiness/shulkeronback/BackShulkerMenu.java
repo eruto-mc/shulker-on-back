@@ -30,7 +30,7 @@ public class BackShulkerMenu extends ShulkerBoxMenu {
     }
 
     /**
-     * 開いている間に箱の中身がほかの経路で書き換わったら、画面の写しを読み直してから同期する。
+     * 開いている間に箱の中身がほかの経路で書き換わったら、画面のコピーを読み直してから同期する。
      *
      * <p>サーバは開いている画面ごとに毎 tick これを呼ぶ（{@code ServerPlayer.tick}）ので、
      * 部員の画面にも1 tick 遅れで新しい中身が出る。
@@ -44,7 +44,7 @@ public class BackShulkerMenu extends ShulkerBoxMenu {
     /**
      * クリックの前にも読み直す。⚠ 窓口からの書き込みとクリックの間に {@code broadcastChanges} が
      * 挟まるとは限らない（クリックの通信はプレイヤーの tick とは別に処理される）ので、
-     * 古い写しを土台にクリックを処理して書き戻さないよう、ここでも見る。
+     * 古いコピーを土台にクリックを処理して書き戻さないよう、ここでも見る。
      */
     @Override
     public void clicked(int slotId, int button, ClickType clickType, Player player) {

@@ -29,7 +29,7 @@ public class BackShulkerContainer extends SimpleContainer {
      *
      * <p>画面を開いている間に<b>ほかの経路が箱の中身を書き換える</b>ことがある——
      * Spoiled が箱の中の食べ物を腐らせるとき、Forge の {@code ShulkerItemStackInvWrapper} 経由で
-     * 箱の NBT を書く。そのまま次のクリックで自分の写しを書くと、腐った肉がパンに戻り、
+     * 箱の NBT を書く。そのまま次のクリックで自分のコピーを書くと、腐った肉がパンに戻り、
      * 画面を開いている間に窓口から入った物は消える（2026-09-26・mod-notes/shulker-box-item-contents.md）。
      * ⚠ 書く側（バニラの {@code ContainerHelper.saveAllItems}・Forge の窓口・自分）は書くたびに
      * 新しい一覧を作って {@code Items} に入れるので、<b>物の同一性</b>で差し替わったかが分かる。
